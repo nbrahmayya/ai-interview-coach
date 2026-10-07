@@ -1,10 +1,10 @@
 # AI Interview Coach
 
-Responsive Next.js frontend and FastAPI backend powered by Groq's `llama-3.3-70b-versatile` model.
+Responsive Next.js frontend and FastAPI backend powered by Groq. The default model is `qwen/qwen3.8-27b`, configurable with `GROQ_MODEL`.
 
 ## Local setup
 
-The frontend reads `NEXT_PUBLIC_API_URL` from `.env.local`; the backend reads `GROQ_API_KEY` and `CORS_ORIGINS` from `backend/.env`. Both real env files are ignored by Git. The frontend example is in `.env.example`, and the backend example is in `backend/.env.example`.
+The frontend reads `NEXT_PUBLIC_API_URL` from `.env.local`; the backend reads `GROQ_API_KEY`, `GROQ_MODEL`, and `CORS_ORIGINS` from `backend/.env`. Both real env files are ignored by Git. The frontend example is in `.env.example`, and the backend example is in `backend/.env.example`.
 
 ### Start the backend
 
@@ -54,7 +54,7 @@ Create a **Web Service** from this GitHub repository:
 - Build Command: `pip install -r requirements.txt`
 - Start Command: `python main.py`
 - Health Check Path: `/health`
-- Environment Variables: `GROQ_API_KEY` (your rotated Groq key) and `CORS_ORIGINS` (the exact Vercel origin, for example `https://ai-interview-coach.vercel.app`)
+- Environment Variables: `GROQ_API_KEY` (your rotated Groq key), `GROQ_MODEL=qwen/qwen3.8-27b`, and `CORS_ORIGINS` (the exact Vercel origin, for example `https://ai-interview-coach.vercel.app`)
 
 Render supplies `PORT`; the backend binds to `0.0.0.0` and uses that value. Copy the deployed service URL, for example `https://ai-interview-coach-api.onrender.com`.
 

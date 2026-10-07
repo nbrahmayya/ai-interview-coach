@@ -14,7 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 load_dotenv()
 
-MODEL = "llama-3.3-70b-versatile"
+MODEL = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
 Difficulty = Literal["Easy", "Medium", "Hard"]
 
 
@@ -154,6 +154,14 @@ async def complete_json(system_prompt: str, payload: dict) -> dict:
             raise HTTPException(
                 status_code=503,
                 detail="Groq is temporarily rate-limiting requests. Please try again shortly.",
+            ) from exc
+        if status_code == 404:
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    f"Groq model '{MODEL}' is unavailable to this API key. "
+                    "Set GROQ_MODEL to a model available in your Groq account."
+                ),
             ) from exc
         if status_code is not None:
             raise HTTPException(

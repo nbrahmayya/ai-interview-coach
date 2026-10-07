@@ -203,6 +203,20 @@ class InterviewApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(response.status_code, 503)
         self.assertIn("rate-limiting", response.json()["detail"])
 
+    async def test_unavailable_model_returns_configuration_message(self) -> None:
+        provider_error = RuntimeError("model not found")
+        provider_error.status_code = 404
+        groq_client = AsyncMock()
+        groq_client.chat.completions.create.side_effect = provider_error
+        with patch("backend.main.get_groq_client", return_value=groq_client):
+            response = await self.client.post(
+                "/api/interview/start",
+                json={"topic": "databases", "difficulty": "Easy"},
+            )
+
+        self.assertEqual(response.status_code, 503)
+        self.assertIn("GROQ_MODEL", response.json()["detail"])
+
 
 if __name__ == "__main__":
     unittest.main()

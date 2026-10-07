@@ -1,6 +1,6 @@
 # FastAPI backend
 
-This API uses Groq's `llama-3.3-70b-versatile` model. Set `GROQ_API_KEY` in `.env` before making AI requests. The run steps copy `.env.example` only if `.env` does not already exist.
+This API uses Groq's `qwen/qwen3.8-27b` model by default. Override it with `GROQ_MODEL` if your account has access to another model. Set `GROQ_API_KEY` in `.env` before making AI requests. The run steps copy `.env.example` only if `.env` does not already exist.
 
 ## Run in PowerShell
 
@@ -31,6 +31,6 @@ CORS allows localhost and 127.0.0.1 frontend origins on any port, as well as ori
 - Root Directory: `backend`
 - Build Command: `pip install -r requirements.txt`
 - Start Command: `python main.py`
-- Environment Variables: `GROQ_API_KEY` (secret) and `CORS_ORIGINS` (set to the exact deployed Vercel origin once available)
+- Environment Variables: `GROQ_API_KEY` (secret), `GROQ_MODEL=qwen/qwen3.8-27b`, and `CORS_ORIGINS` (set to the exact deployed Vercel origin once available)
 
 The app binds to `0.0.0.0` and uses the host-provided `PORT` value, falling back to `8000` locally. Startup logs include the selected port and model.
